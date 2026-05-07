@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SpringView</title>
+</head>
+<body>
+<video id="video" controls autoplay width="100%"></video>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script th:inline="javascript">
+    const video = document.getElementById('video');
+
+    async function waitForStream() {
+        while (true) {
+            const res = await fetch('/stream.m3u8');
+            const text = await res.text();
+
+            if (text.includes('.ts')) {
+                return;
+            }
+
+            await new Promise(r => setTimeout(r, 1000));
+        }
+    }
+
+    waitForStream().then(() => {
+        const hls = new Hls();
+        hls.loadSource('/stream.m3u8');
+        hls.attachMedia(video);
+    });
+</script>
+</body>
+</html>
