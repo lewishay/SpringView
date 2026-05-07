@@ -33,52 +33,52 @@ public class StreamService {
         AudioSwitcher.switchToNew();
 
         ProcessBuilder pb = new ProcessBuilder(
-                "ffmpeg",
+            "ffmpeg",
 
-                // Video capture
-                "-f", "gdigrab",
-                "-framerate", "30",
-                "-thread_queue_size", "512",
-                "-i", "desktop",
+            // Video capture
+            "-f", "gdigrab",
+            "-framerate", "30",
+            "-thread_queue_size", "512",
+            "-i", "desktop",
 
-                // Audio capture
-                "-f", "dshow",
-                "-thread_queue_size", "512",
-                "-i", "audio=" + streamAudioDevice,
+            // Audio capture
+            "-f", "dshow",
+            "-thread_queue_size", "512",
+            "-i", "audio=" + streamAudioDevice,
 
-                // Video settings
-                "-vf", "scale=1280:-1:flags=lanczos",
-                "-r", "30",
-                "-vsync", "cfr",
-                "-pix_fmt", "yuv420p",
-                "-c:v", "h264_nvenc",
-                "-preset", "p4",
-                "-rc", "cbr",
-                "-b:v", "2500k",
-                "-maxrate", "2500k",
-                "-bufsize", "500k",
+            // Video settings
+            "-vf", "scale=1280:-1:flags=lanczos",
+            "-r", "30",
+            "-vsync", "cfr",
+            "-pix_fmt", "yuv420p",
+            "-c:v", "h264_nvenc",
+            "-preset", "p4",
+            "-rc", "cbr",
+            "-b:v", "2500k",
+            "-maxrate", "2500k",
+            "-bufsize", "500k",
 
-                // Audio settings
-                "-c:a", "aac",
-                "-b:a", "128k",
-                "-ar", "44100",
-                "-af", "aresample=async=1:first_pts=0",
+            // Audio settings
+            "-c:a", "aac",
+            "-b:a", "128k",
+            "-ar", "44100",
+            "-af", "aresample=async=1:first_pts=0",
 
-                // Sync video and audio
-                "-map", "0:v:0",
-                "-map", "1:a:0",
+            // Sync video and audio
+            "-map", "0:v:0",
+            "-map", "1:a:0",
 
-                // Keyframe settings
-                "-g", "30",
-                "-sc_threshold", "0",
+            // Keyframe settings
+            "-g", "30",
+            "-sc_threshold", "0",
 
-                // HLS settings
-                "-f", "hls",
-                "-hls_time", "1",
-                "-hls_list_size", "2",
-                "-hls_flags", "delete_segments+append_list+independent_segments",
-                "-hls_playlist_type", "event",
-                playlistDir + "\\stream.m3u8"
+            // HLS settings
+            "-f", "hls",
+            "-hls_time", "1",
+            "-hls_list_size", "2",
+            "-hls_flags", "delete_segments+append_list+independent_segments",
+            "-hls_playlist_type", "event",
+            playlistDir + "\\stream.m3u8"
         );
 
         pb.inheritIO();
