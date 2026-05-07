@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Application.class, args);
         StreamService streamService = context.getBean(StreamService.class);
         try {
@@ -17,5 +17,4 @@ public class Application {
             System.out.printf("Could not start stream, ex: %s%n", ex.getMessage());
         }
     }
-
 }

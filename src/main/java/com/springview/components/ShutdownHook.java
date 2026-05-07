@@ -10,7 +10,6 @@ public class ShutdownHook {
     private final StreamService streamService;
 
     public ShutdownHook(StreamService streamService) {
-
         this.streamService = streamService;
     }
 
