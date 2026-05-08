@@ -43,26 +43,30 @@ public class StreamService {
 
             // Audio capture
             "-f", "dshow",
-            "-thread_queue_size", "512",
+            "-thread_queue_size", "256",
             "-i", "audio=" + streamAudioDevice,
 
             // Video settings
-            "-vf", "scale=1280:-1:flags=lanczos",
-            "-r", "30",
-            "-vsync", "cfr",
+            "-vf", "scale=1080:-1,fps=30",
+            "-vsync", "1",
             "-pix_fmt", "yuv420p",
             "-c:v", "h264_nvenc",
-            "-preset", "p4",
-            "-rc", "cbr",
-            "-b:v", "2500k",
-            "-maxrate", "2500k",
-            "-bufsize", "500k",
+
+            // NVENC optimisations
+            "-preset", "p7",
+            "-profile", "high",
+            "-level", "4.2",
+            "-rc", "vbr",
+            "-b:v", "4000k",
+            "-maxrate", "6000k",
+            "-bufsize", "8000k",
+            "-cq", "24",
+            "-rc-lookahead", "0",
 
             // Audio settings
             "-c:a", "aac",
             "-b:a", "128k",
             "-ar", "44100",
-            "-af", "aresample=async=1:first_pts=0",
 
             // Sync video and audio
             "-map", "0:v:0",
@@ -70,11 +74,12 @@ public class StreamService {
 
             // Keyframe settings
             "-g", "30",
+            "-keyint_min", "30",
             "-sc_threshold", "0",
 
             // HLS settings
             "-f", "hls",
-            "-hls_time", "1",
+            "-hls_time", "0.5",
             "-hls_list_size", "2",
             "-hls_flags", "delete_segments+append_list+independent_segments",
             "-hls_playlist_type", "event",
