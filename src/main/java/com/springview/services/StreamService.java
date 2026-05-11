@@ -80,9 +80,8 @@ public class StreamService {
             // HLS settings
             "-f", "hls",
             "-hls_time", "0.5",
-            "-hls_list_size", "2",
-            "-hls_flags", "delete_segments+append_list+independent_segments",
-            "-hls_playlist_type", "event",
+            "-hls_list_size", "4",
+            "-hls_flags", "delete_segments+independent_segments",
             playlistDir + "\\stream.m3u8"
         );
 
